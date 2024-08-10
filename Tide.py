@@ -1,12 +1,12 @@
 import pydicom
-
+from utils import *
 def identify_sequence(dicom_file):
     # Read the DICOM file
     ds = pydicom.dcmread(dicom_file)
 
     # Initialize variables for sequence identification
     sequence_type = "Unknown"
-
+    print(calculate_age(ds))
     # Check for ProtocolName or SeriesDescription or SequenceName
     if 'ProtocolName' in ds:
         protocol_name = ds.ProtocolName.lower()
@@ -19,7 +19,6 @@ def identify_sequence(dicom_file):
         sequence_name = ds.SequenceName.lower()
     else:
         sequence_name = ""
-    print(ds)
     # Heuristic checks to identify T1, T2, and FLAIR
     if 't1' in protocol_name or 't1' in sequence_name:
         sequence_type = "T1"
